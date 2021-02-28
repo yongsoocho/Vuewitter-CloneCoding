@@ -1,14 +1,19 @@
 <template>
 <v-container>
 	<v-card>
-		<v-form>
+		<v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
 			<v-container>
-				<v-text-field 
+				<v-subtitle>Login</v-subtitle>
+				<v-text-field
+					v-model="email"
+					:rules="emailRules"
 					label="email"
 					type="email"
 					required
 				/>
-				<v-text-field 
+				<v-text-field
+					v-model="password"
+					:rules="passwordRules"
 					label="password"
 					type="password"
 					required
@@ -23,7 +28,29 @@
 
 <script>
 export default {
-
+	data(){
+		return{
+			valid: false,
+			email: '',
+			password: '',
+			emailRules: [
+				v => !!v || 'email is required',
+				v => /.+@.+/.test(v) || 'This email is not valid',
+			],
+			passwordRules: [
+				v => !!v || 'password is required'
+			]
+		}
+	},
+	methods:{
+		onSubmitForm(){
+			if(this.$refs.form.validate()){
+				alert('login request')
+			}else{
+				alert('retry')
+			}
+		}
+	}
 }
 </script>
 

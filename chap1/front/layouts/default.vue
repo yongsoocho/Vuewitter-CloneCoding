@@ -25,7 +25,7 @@
 			<login-form></login-form>
 		</v-col>
 		<v-col xs="12" md="9">
-			
+			<nuxt />
 		</v-col>
 	</v-row>
 </v-app>

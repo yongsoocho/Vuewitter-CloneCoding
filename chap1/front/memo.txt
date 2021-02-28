@@ -27,4 +27,19 @@
 
 13. 실무에서는 @ ~ 같은 절대경로를 많이 쓴다 절대경로를 익힐 것!
 
-14. 
+14. v-image 와 img 의 차이는 vuetify 에서 커스텀을 더 할 수 있다는 것 밖에 없다
+
+15. sign.vue 페이지에 있는 <v-form v-model="valid"> 는 vuetify 제공 기능이다
+
+16. Rules 는 vuetify 에서 제공하는 기능! data(){return{ rules:[ 조건함수 || 에러메세지 ] }} 꼴이다
+
+17. ref="form" 과 this.$refs.form.validate() 도 vuetify 에서 제공하는 기능 공식문서 참조
+
+18. Rules 가 없으면 체크해야 할 것이 없으니 valid 가 항상 true => rules 가 모두 통과시 valid = true 되는 시스템인듯?
+
+19. 팀 개발에서는 eslint 가 필수적이다 eslint 는 시작전에 세팅을 하고함 **/* === 모든폴더/모든파일
+
+20. vuex store 은 사용자 정보따로, 게시글 정보따로.. 등 하기 위하여 new Vuex.Store({ }) 구식형태를 쓰지 않는다
+20-1. export const state = () => { } , export const mutations = { } 형태를 쓰고 있다
+
+21. 
