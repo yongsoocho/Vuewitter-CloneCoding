@@ -2,10 +2,7 @@
 <div>
 	<post-form v-if="me"></post-form>
 	<div>
-		<post-card></post-card>
-		<post-card></post-card>
-		<post-card></post-card>
-		<post-card></post-card>
+		<post-card v-for="p in mainPost" :key="p.id" :post="p"></post-card>
 	</div>
 </div>
 </template>
@@ -27,6 +24,9 @@ export default {
 	computed:{
 		me(){
 			return this.$store.state.user.me;
+		},
+		mainPost(){
+			return this.$store.state.post.mainPost;
 		}
 	}
 }
