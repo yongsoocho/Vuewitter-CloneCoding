@@ -81,9 +81,18 @@ export default {
 	methods:{
 		onSubmitForm(){
 			if(this.$refs.form.validate()){
-				alert('sign up request')
-			}else{
-				alert('retry')
+				this.$store.dispatch('user/signUp', {
+					nickname: this.nickname,
+					email: this.email,
+				})
+				.then(() => {
+					this.$router.push({
+					path:'/'
+					});
+				})
+				.catch((error) => {
+					alert('retry');
+				})
 			}
 		}
 	}

@@ -1,5 +1,5 @@
 <template>
-<v-container>
+<v-container v-if="!me">
 	<v-card>
 		<v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
 			<v-container>
@@ -24,6 +24,12 @@
 		</v-form>
 	</v-card>
 </v-container>
+<v-container v-else>
+	<v-card>
+		<v-card-head>Welcome {{ me.nickname }}</v-card-head>
+		<v-btn @click="onLogOut">Logout</v-btn>
+	</v-card>
+</v-container>
 </template>
 
 <script>
@@ -45,11 +51,20 @@ export default {
 	methods:{
 		onSubmitForm(){
 			if(this.$refs.form.validate()){
-				alert('login request')
-			}else{
-				alert('retry')
+				this.$store.dispatch('user/logIn', {
+					email:this.email,
+					nickname:'ygr',
+				})
 			}
+		},
+		onLogOut(){
+			this.$store.dispatch('user/logOut');
 		}
+	},
+	computed:{
+		me(){
+			return this.$store.state.user.me;
+		},
 	}
 }
 </script>

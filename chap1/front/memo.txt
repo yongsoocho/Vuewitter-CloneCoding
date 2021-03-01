@@ -42,4 +42,28 @@
 20. vuex store 은 사용자 정보따로, 게시글 정보따로.. 등 하기 위하여 new Vuex.Store({ }) 구식형태를 쓰지 않는다
 20-1. export const state = () => { } , export const mutations = { } 형태를 쓰고 있다
 
-21. 
+21. .nuxt 폴더는 자동으로 컴파일된 결과물들임 git 에도 빼고 올리는게 좋다 용량이 크다
+
+22. store 에는 vuex 를 관리하는 파일이 들어간다 nuxt 가 store로 인식하므로 주의 !
+
+23. store 에서 index 는 기본 파일이 되고 post 나 user 는 모듈이 된다
+
+24. 레이아웃 에서 접근 할때  this.$store.state.user.name 으로 접근했다 
+
+25. mutations 에 접근 할때 this.$store.commit('모퓰명/mutation명') 로 접근했다
+
+26. state 는 함수 mutation 은 객체 data(){  } 와 methods{ } 로 생각 하면될듯!
+
+27. mutations 는 비동기 작업이 있으면 안된다!
+
+28. 비동기 작업을 위해 actions 가 생겼다
+
+29. actions 의 context 에는 	commit(mutations 실행), dispatch(actions 실행), state, rootState, getter.. 등등 많다 console.log(context) 해보자..
+
+30. store 관련 정보는 computed 에서 불러온다?
+
+31. dispatch 는 promise 기 때문에 then catch 가능!
+
+32. commit 의 3번째 인자로 { root:true } 시 actions 에서 index.js mutations 호출 가능
+
+33. 
