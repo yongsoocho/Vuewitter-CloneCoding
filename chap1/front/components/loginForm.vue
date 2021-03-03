@@ -26,8 +26,10 @@
 </v-container>
 <v-container v-else>
 	<v-card>
-		<v-card-head>Welcome {{ me.nickname }}</v-card-head>
-		<v-btn @click="onLogOut">Logout</v-btn>
+		<v-container>
+			<h3>Welcome {{ me.nickname }}</h3>
+			<v-btn @click="onLogOut">Logout</v-btn>
+		</v-container>
 	</v-card>
 </v-container>
 </template>

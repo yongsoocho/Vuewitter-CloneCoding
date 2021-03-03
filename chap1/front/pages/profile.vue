@@ -4,9 +4,11 @@
 		<v-card :style="{ marginBottom:'20px' }">
 			<v-container>
 				<v-subheader>My profile</v-subheader>
-				<v-form>
+				<v-form v-model="valid" @submit.prevent="onChangeNickname">
 					<v-text-field
 								  label="nickname"
+								  v-model="nickname"
+								  :rules="nicknameRules"
 								  required
 								  />
 					<v-btn color="teal accent-4" type="submit" class="white--text">Edit</v-btn>
@@ -16,13 +18,13 @@
 		<v-card :style="{ marginBottom:'20px' }">
 			<v-container>
 				<v-subheader>Following</v-subheader>
-				<follow-list />
+				<following-list />
 			</v-container>
 		</v-card>
 		<v-card :style="{ marginBottom:'20px' }">
 			<v-container>
 				<v-subheader>Follower</v-subheader>
-				<follow-list />
+				<follower-list />
 			</v-container>
 		</v-card>
 	</v-container>
@@ -30,12 +32,17 @@
 </template>
 
 <script>
-	import followList from "../components/followList";
+	import followingList from "../components/followingList";
+	import followerList from "../components/followerList";
 	
 export default {
 	data(){
 		return{
-			msg:'Nuxt.js! This is profile'
+			valid:false,
+			nickname:'',
+			nicknameRules:[
+				v => !!v || 'please input your new nickname'
+			]
 		}
 	},
 	head(){
@@ -44,7 +51,15 @@ export default {
 		}
 	},
 	components:{
-		followList,
+		followingList,
+		followerList
+	},
+	methods:{
+		onChangeNickname(){
+			this.$store.dispatch('user/changeNickname', {
+				nickname: this.nickname
+			})
+		}
 	}
 }
 </script>

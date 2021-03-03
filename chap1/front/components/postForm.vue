@@ -30,17 +30,19 @@ export default {
 	data(){
 		return{
 			valid:false,
-			hideDetails: false,
+			hideDetails: true,
 			successMessages: '',
 			success: false,
 			content: ''
 		}
 	},
 	methods:{
-		onChangeTextarea(){
-			this.hideDetails = true;
-			this.success = false;
-			this.successMessages = '';
+		onChangeTextarea(value){
+			if(value.length){
+				this.hideDetails = true;
+				this.success = false;
+				this.successMessages = '';
+			}
 		},
 		onSubmitForm(){
 			if(this.$refs.form.validate()){
@@ -55,7 +57,7 @@ export default {
 					createdAt: Date.now()
 				})
 				.then(() => {
-					this.content='';
+					this.content = '';
 					this.hideDetails = false;
 					this.success = true;
 					this.successMessages = 'upload is success!';

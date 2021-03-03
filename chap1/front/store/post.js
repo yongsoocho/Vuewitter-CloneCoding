@@ -1,16 +1,20 @@
 export const state = () => ({
 	mainPost: [],
-})
+});
 
 export const mutations = {
 	addMainPost(state, payload){
-		state.mainPost.unshift(payload)
+		state.mainPost.unshift(payload);
 	},
 	removeMainPost(state, payload){
 		const index = state.mainPost.findIndex( v => v.id === payload.id );
 		state.mainPost.splice(index, 1);
+	},
+	addComment(state, payload) {
+		const index = state.mainPost.findIndex( v => v.id === payload.postId );
+		state.mainPost[index].Comments.unshift(payload);		
 	}
-}
+};
 
 export const actions = {
 	add({ commit }, payload) {
@@ -18,5 +22,8 @@ export const actions = {
 	},
 	remove({ commit }, payload) {
 		commit('removeMainPost', payload);
+	},
+	addComment({ commit }, payload) {
+		commit('addComment', payload);
 	}
-}
+};
