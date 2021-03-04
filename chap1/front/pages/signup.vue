@@ -78,6 +78,15 @@ export default {
 			title:'signup'
 		}
 	},
+	watch:{
+		me(value, oldvalue){
+			if(value){
+				this.$router.push({
+					path:'/',
+				});
+			}
+		}
+	},
 	methods:{
 		onSubmitForm(){
 			if(this.$refs.form.validate()){
@@ -95,7 +104,13 @@ export default {
 				})
 			}
 		}
-	}
+	},
+	middleware:'anonymous',
+	computed:{
+		me(){
+			return this.$store.state.user.me;
+		}
+	},
 }
 </script>
 

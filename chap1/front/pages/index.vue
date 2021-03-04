@@ -27,8 +27,30 @@ export default {
 		},
 		mainPost(){
 			return this.$store.state.post.mainPost;
+		},
+		hasMorePost(){
+			return this.$store.state.post.hasMorePost;
 		}
+	},
+	fetch({ store }){
+		store.dispatch('post/loadPost');
+	},
+	methods:{
+		onScroll() {
+			if(window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
+				if(this.hasMorePost) {
+					this.$store.dispatch('post/loadPost');
+				}
+			}
+		}
+	},
+	mounted() {
+		window.addEventListener('scroll', this.onScroll);
+	},
+	beforeDestroy() {
+		window.addEventListener('scroll', this.onScroll);
 	}
+	
 }
 </script>
 

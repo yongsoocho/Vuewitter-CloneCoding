@@ -32,6 +32,12 @@ export const mutations = {
 	onFollowerRemove(state, payload) {
 		const index = state.followerLists.findIndex(v => v.id === payload.id);
 		state.followerLists.splice(index, 1);
+	},
+	onFollowerAdd(state, payload) {
+		state.followerLists.push(payload)
+	},
+	onFollowingAdd(state, payload) {
+		state.followingLists.push(payload)
 	}
 };
 
@@ -53,5 +59,11 @@ export const actions = {
 	},
 	onFollowerRemove({ commit }, payload) {
 		commit('onFollowerRemove', payload);
+	},
+	onFollowerAdd({ commit }, payload) {
+		commit('onFollowerAdd', payload);
+	},
+	onFollowingAdd({ commit }, payload) {
+		commit('onFollowingAdd', payload);
 	}
 };

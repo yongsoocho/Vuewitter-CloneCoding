@@ -66,4 +66,24 @@
 
 32. commit 의 3번째 인자로 { root:true } 시 actions 에서 index.js mutations 호출 가능
 
-33. 
+33. props 로 넘겨서 component 를 구분해도 된다 예) follow component 를 props로 following/follower 구분!
+
+34. context 를 구조분해하여 { commmit } , state, { store } .. 처럼 쓰는 것!
+
+35. pages 폴더 안에 _id (언더바가 있을 때) nuxt는 동적 라우팅으로 인식한다
+
+36. 동적라우팅은 this.$route.params 에 들어있다 !! _id 일시 this.$route.params.id  << 문자열이다
+
+37. parseInt(.., 진수) 로 params 를 변환해줘야 한다! 
+
+38. post/_id 가 아니라 post 로 이동하는 것을 막기위해 dir post/ dir _id / index.vue 로 한다.
+
+39. array(n) => 빈배열 생성 , fill(value, [start:index], [end:index]) start~end-1 까지 value로, 배열1.concat(배열2) => 둘이 합침
+
+40. fetch 는 mount 전에 store 에 비동기적으로 데이터를 넣을 때 사용한다 
+
+41. array(10).fill().map() 10개짜리 빈배열을 생성하고 fill 로 다 null 로 채우고 map 으로 만듬
+
+42. created (){ } 시에는 beforeDestroy (){ } 를 해야 메모리 누수가 안생김 
+
+43. document.documentElement.clientHeight = 화면 높이 / document.documentElement.scrollHeight = 전체 높이 

@@ -60,7 +60,8 @@ export default {
 				nickname: this.nickname
 			})
 		}
-	}
+	},
+	middleware: 'authenticated',
 }
 </script>
 

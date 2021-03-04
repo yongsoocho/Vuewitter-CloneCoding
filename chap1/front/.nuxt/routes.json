@@ -21,6 +21,13 @@
     "_name": "_7b37ed0f"
   },
   {
+    "name": "post-id",
+    "path": "/post/:id",
+    "component": "/workspace/Vuewitter-CloneCodin/chap1/front/pages/post/_id/index.vue",
+    "chunkName": "pages/post/_id/index",
+    "_name": "_8be52f86"
+  },
+  {
     "name": "index",
     "path": "/",
     "component": "/workspace/Vuewitter-CloneCodin/chap1/front/pages/index.vue",
