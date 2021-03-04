@@ -17,9 +17,9 @@
 					<template v-slot:activator="{ on }">
 						<v-btn text color="orange" v-on="on"><v-icon>mdi-dots-horizontal</v-icon></v-btn>
 					</template>
-					<div>
-						<v-btn dark color="red" @click="onRemovePost">Delete</v-btn>
-						<v-btn text color="orange" @click="onEditPost">Edit</v-btn>
+					<div :style="{ backgroundColor:'white' }">
+						<v-btn dark color="red" @click="onRemovePost" :style="{ marginRight:'5px' }">Delete</v-btn>
+						<v-btn dark color="orange" @click="onEditPost">Edit</v-btn>
 					</div>
 				</v-menu>
 			</v-card-action>

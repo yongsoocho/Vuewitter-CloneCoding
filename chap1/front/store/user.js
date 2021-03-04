@@ -1,22 +1,14 @@
 export const state = () => ({
 	me:null,
-	followerLists: [
-		{nickname:'pgh',id:1}, 
-		{nickname:'kms',id:2}, 
-		{nickname:'lgm',id:3}, 
-		{nickname:'lgh',id:4},
-		{nickname:'hic',id:5}, 
-		{nickname:'zsg',id:6},
-	],
-	followingLists: [
-		{nickname:'zsg',id:6},
-		{nickname:'hic',id:5}, 
-		{nickname:'lgh',id:4},
-		{nickname:'lgm',id:3}, 
-		{nickname:'kms',id:2}, 
-		{nickname:'pgh',id:1}, 
-	],
+	followerLists: [],
+	followingLists: [],
+	hasMoreFollower: true,
+	hasMoreFollowing: true
 });
+
+const totalFollowers = 8;
+const totalFollowings = 10;
+const limit = 3;
 
 export const mutations = {
 	setMe(state, payload) {
@@ -34,11 +26,29 @@ export const mutations = {
 		state.followerLists.splice(index, 1);
 	},
 	onFollowerAdd(state, payload) {
-		state.followerLists.push(payload)
+		state.followerLists.push(payload);
 	},
 	onFollowingAdd(state, payload) {
-		state.followingLists.push(payload)
-	}
+		state.followingLists.push(payload);
+	},
+	loadFollower(state) {
+		const diff = totalFollowers - state.followerLists.length;
+		const fakeUsers = Array(diff > limit ? limit : diff).fill().map(v => ({
+			id: Math.random().toString(),
+			nickname: Math.floor(Math.random()*1000),
+		}));
+		state.followerLists = state.followerLists.concat(fakeUsers);
+		state.hasMoreFollower = fakeUsers.length === limit;
+	},
+	loadFollowing(state) {
+		const diff = totalFollowings - state.followingLists.length;
+		const fakeUsers = Array(diff > limit ? limit : diff).fill().map(v => ({
+			id: Math.random().toString(),
+			nickname: Math.floor(Math.random()*1000),
+		}));
+		state.followingLists = state.followingLists.concat(fakeUsers);
+		state.hasMoreFollowing = fakeUsers.length === limit;
+	},
 };
 
 export const actions = {
@@ -65,5 +75,15 @@ export const actions = {
 	},
 	onFollowingAdd({ commit }, payload) {
 		commit('onFollowingAdd', payload);
+	},
+	loadFollower({ commit, state }, payload) {
+		if(state.hasMoreFollower){
+			commit('loadFollower');
+		}
+	},
+	loadFollowing({ commit, state }, payload) {
+		if(state.hasMoreFollowing){
+			commit('loadFollowing');	
+		}
 	}
 };

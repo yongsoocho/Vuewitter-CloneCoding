@@ -1,16 +1,5 @@
 export const state = () => ({
-	mainPost: [
-		{
-			content: 123,
-			User:{
-				nickname:123
-			},
-			Comments:[],
-			Images:[],
-			id: 1,
-			createdAt: Date.now()
-		},
-	],
+	mainPost: [],
 	hasMorePost:true,
 });
 

@@ -19,12 +19,14 @@
 			<v-container>
 				<v-subheader>Following</v-subheader>
 				<following-list />
+				<v-btn @click="loadMoreFollowing" v-if="hasMoreFollowing" dark color="blue" :style="{ width:'100%' }">More</v-btn>
 			</v-container>
 		</v-card>
 		<v-card :style="{ marginBottom:'20px' }">
 			<v-container>
 				<v-subheader>Follower</v-subheader>
 				<follower-list />
+				<v-btn @click="loadMoreFollower" v-if="hasMoreFollower" dark color="blue" :style="{ width:'100%' }">More</v-btn>
 			</v-container>
 		</v-card>
 	</v-container>
@@ -59,9 +61,27 @@ export default {
 			this.$store.dispatch('user/changeNickname', {
 				nickname: this.nickname
 			})
+		},
+		loadMoreFollowing(){
+			this.$store.dispatch('user/loadFollowing');
+		},
+		loadMoreFollower(){
+			this.$store.dispatch('user/loadFollower');
 		}
 	},
 	middleware: 'authenticated',
+	computed:{
+		hasMoreFollowing() {
+			return this.$store.state.user.hasMoreFollowing;
+		},
+		hasMoreFollower() {
+			return this.$store.state.user.hasMoreFollower;
+		}
+	},
+	fetch({ store }){
+		store.dispatch('user/loadFollower');
+		store.dispatch('user/loadFollowing');
+	}
 }
 </script>
 
