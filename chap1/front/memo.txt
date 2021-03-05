@@ -87,3 +87,10 @@
 42. created (){ } 시에는 beforeDestroy (){ } 를 해야 메모리 누수가 안생김 
 
 43. document.documentElement.clientHeight = 화면 높이 / document.documentElement.scrollHeight = 전체 높이 
+
+44. () => { return{} }  ===  () => ({ })  이다. ()는 return 이라고 생각하면 된다! 
+44-1. () => { return a }  ===  () => (a)  ===  () => a 
+
+45. npm outated : 검색 // npm update : 업데이트 // npm audit fix : 취약점(vulnerabilities 가 0 초과일때)
+
+46. 

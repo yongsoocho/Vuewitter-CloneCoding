@@ -5,8 +5,8 @@
 			<v-image />
 			<v-card-text>
 				<div>
-					<h3>{{ post.User.nickname }}</h3>
-					<nuxt-link :to="'/post/'+post.id">{{ post.content }}</nuxt-link>
+					<h3><NuxtLink :to="'/user/'+post.id">{{ post.User.nickname }}</NuxtLink></h3>
+					<div>{{ post.content }}</div>
 				</div>
 			</v-card-text>
 			<v-card-action>
@@ -74,6 +74,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
 </style>

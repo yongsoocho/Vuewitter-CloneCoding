@@ -6,8 +6,9 @@ import scrollBehavior from './router.scrollBehavior.js'
 
 const _747b108a = () => interopDefault(import('../pages/profile.vue' /* webpackChunkName: "pages/profile" */))
 const _1eb749c7 = () => interopDefault(import('../pages/signup.vue' /* webpackChunkName: "pages/signup" */))
-const _7b37ed0f = () => interopDefault(import('../pages/user/yongsoo.vue' /* webpackChunkName: "pages/user/yongsoo" */))
+const _f745664a = () => interopDefault(import('../pages/hashtag/_id/index.vue' /* webpackChunkName: "pages/hashtag/_id/index" */))
 const _8be52f86 = () => interopDefault(import('../pages/post/_id/index.vue' /* webpackChunkName: "pages/post/_id/index" */))
+const _6c4557b0 = () => interopDefault(import('../pages/user/_id/index.vue' /* webpackChunkName: "pages/user/_id/index" */))
 const _3d219173 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 const emptyFn = () => {}
@@ -30,13 +31,17 @@ export const routerOptions = {
     component: _1eb749c7,
     name: "signup"
   }, {
-    path: "/user/yongsoo",
-    component: _7b37ed0f,
-    name: "user-yongsoo"
+    path: "/hashtag/:id",
+    component: _f745664a,
+    name: "hashtag-id"
   }, {
     path: "/post/:id",
     component: _8be52f86,
     name: "post-id"
+  }, {
+    path: "/user/:id",
+    component: _6c4557b0,
+    name: "user-id"
   }, {
     path: "/",
     component: _3d219173,
