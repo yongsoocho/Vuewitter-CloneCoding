@@ -93,4 +93,10 @@
 
 45. npm outated : 검색 // npm update : 업데이트 // npm audit fix : 취약점(vulnerabilities 가 0 초과일때)
 
-46. 
+46. package.json 에서 main 은 그냥 진입점 제일 중요한 파일
+
+47. express.json 은 json 을해석 못하는 서버에게 해석을 해주어 req.body 에 넣어줌
+
+48. express.urlencoded({extended:false}) form 을 통해서 전송할때 body 에 해석해서 넣어줌
+
+49. 
