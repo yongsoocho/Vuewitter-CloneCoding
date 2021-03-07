@@ -56,6 +56,7 @@ export default {
 				this.$store.dispatch('user/logIn', {
 					email:this.email,
 					nickname:'ygr',
+					password:this.password
 				})
 			}
 		},

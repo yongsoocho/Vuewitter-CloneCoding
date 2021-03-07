@@ -30,7 +30,7 @@ export default {
 	data(){
 		return{
 			valid:false,
-			hideDetails: true,
+			hideDetails: false,
 			successMessages: '',
 			success: false,
 			content: ''

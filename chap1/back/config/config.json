@@ -2,8 +2,8 @@
   "development": {
     "username": "root",
     "password": "vuewitter",
-    "database": "database_development",
-    "host": "127.0.0.1",
+    "database": "vuewitter",
+    "host": "34.68.71.158",
     "dialect": "mysql"
   },
   "test": {

@@ -14,21 +14,14 @@ const morgan = require('morgan');
 
 
 app.use(morgan('dev'));
-app.use(cors({
-	origin:'https://vuewitter.run.goorm.io:8000',
-	credentials:true
-}));
+app.use(cors('https://vuewitter.run.goorm.io:8000'));
 app.use(express.json());
 app.use(express.urlencoded({ extended:false }));
 app.use(cookie('cookieSecret'));
 app.use(session({
 	resave:false,
 	saveUninitialized:false,
-	secret: 'cookieSecret',
-	cookie: {
-		httpOnly: true,
-		secure: false
-	}
+	secret: 'cookieSecret'
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -72,12 +65,6 @@ app.post('/user/login', (req, res, next) => {
 		}
 		return req.login(user);
 	})(req, res, next);
-});
-
-app.post('/post', (req, res) => {
-	if(req.isAuthenticated()){
-		
-	}
 });
 
 app.listen(3085, () => {

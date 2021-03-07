@@ -53,15 +53,27 @@ export const mutations = {
 
 export const actions = {
 	signUp({ commit, state }, payload) {
-		this.$axios.post('/user', {
+		this.$axios.post('https://vuewitterexpress.run.goorm.io:3085/user', {
 			email: payload.email,
 			nickname: payload.nickname,
 			password: payload.password
-		});
-		commit('setMe', payload);
+		}).then((data)=>{
+			console.log(data);
+			commit('setMe', payload);
+		})
 	},
 	logIn({ commit }, payload) {
-		commit('setMe', payload);
+		this.$axios.post('https://vuewitterexpress.run.goorm.io:3085/user/login', {
+			email: payload.email,
+			password: payload.password
+		}, {
+			withCredentials: true
+		}).then((data)=>{
+			console.log(data);
+			commit('setMe', payload);
+		}).catch((error)=>{
+			console.error(error);
+		})
 	},
 	logOut({ commit }, payload) {
 		commit('setMe', null);
