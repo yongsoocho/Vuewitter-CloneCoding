@@ -1,16 +1,17 @@
 const express = require('express');
 const cors = require('cors');
-// const db = require('./models');
+const db = require('./models');
 const app = express();
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const passport = require('passport');
-// const passportConfig = require('./passport');
+const passportConfig = require('./passport');
 const cookie = require('cookie-parser');
 const morgan = require('morgan');
+const userRouter = require('./routes/user');
 
-
-// db.sequelize.sync({ force:false });
+passportConfig();
+db.sequelize.sync({ force:false });
 
 
 app.use(morgan('dev'));
@@ -37,42 +38,7 @@ app.get('/', (req, res) => {
 	res.send('Hi');
 });
 
-app.post('/user', async (req, res) => {
-	try{
-		const hash = await bcrypt.hash(req.body.password, 12);
-		const exUser = db.User.findOne({
-			where: { email: req.body.email }
-		})
-		if(exUser){
-			return res.statue(403).json({
-				errorCode: 1,
-				message:'Already Exist!!'
-			});
-		}
-		const newUser = await db.User.create({
-			email:req.body.email,
-			nicknae:req.body.nickname,
-			password:hash,
-		});
-		res.status(201).json(newUser);
-	}catch(err){
-		console.log(err);
-		next(err);
-	}
-});
-
-app.post('/user/login', (req, res, next) => {
-	passport.authenticate("local", (error, user, info) => {
-		if(error){
-			console.log(error);
-			return next(error);
-		}
-		if(info){
-			return res.status(401).sen(info.reason);
-		}
-		return req.login(user);
-	})(req, res, next);
-});
+app.use('/user', userRouter);
 
 app.post('/post', (req, res) => {
 	if(req.isAuthenticated()){

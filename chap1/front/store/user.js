@@ -57,8 +57,8 @@ export const actions = {
 			email: payload.email,
 			nickname: payload.nickname,
 			password: payload.password
-		}).then((data)=>{
-			console.log(data);
+		}).then((res.data)=>{
+			console.log(res.data);
 			commit('setMe', payload);
 		})
 	},
@@ -68,15 +68,23 @@ export const actions = {
 			password: payload.password
 		}, {
 			withCredentials: true
-		}).then((data)=>{
-			console.log(data);
+		}).then((res.data)=>{
+			console.log(res.data);
 			commit('setMe', payload);
 		}).catch((error)=>{
 			console.error(error);
 		})
 	},
 	logOut({ commit }, payload) {
-		commit('setMe', null);
+		this.$axios.post('https://vuewitterexpress.run.goorm.io:3085/user/logout', {}, {
+			withCredentials:true
+		})
+		.then((res) => {
+			commit('setMe', null);
+		})
+		.catch((err) => {
+			console.log(err);
+		})
 	},
 	changeNickname({ commit }, payload) {
 		commit('changeNickname', payload);

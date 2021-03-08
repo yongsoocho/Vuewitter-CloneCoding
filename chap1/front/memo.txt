@@ -108,8 +108,12 @@
 51-2. passport.initialize 는 req.login && req.logout 을 만든다
 51-3. req.login 은 session 에 사용자 정보 저장 req.login(user:사용자정보, () => {세션 저장})
 51-4. 어떻게 session 에 사용자 정보를 저장? passport.serializeUser((user, done)=>{ return done(null, user.id) })
-51-5. withCredentials: true 시 서로 쿠기가 저장
+51-5. withCredentials: true 시 서로 쿠기가 저장 (다른 서버에서는 항상 넣어주기 $axios 3번째 옵션자리에)
 
 52. Credentials 는 cors 에 넣어주길
 
-53. 
+53. utf8mb4 한글+이모티콘
+
+54. belongsTo-hasMany / belongsToMany-belongsToMany / 따른 칸에 있는 ID = 외래키 => 외래키를 여러개 허용x 그래서 through 가생김
+
+55. 
