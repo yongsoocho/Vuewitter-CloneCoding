@@ -50,4 +50,52 @@ postRouter.post('images', upload.array('image'), isLoggedOut, (req, res) => {
 	res.json(req.files.map(v => v.filename));
 })
 
+postRouter.post('/:id/comment', isLoggedIni, async (req, res, next) => {
+	try{
+		const post = await db.Post.findOne({ where: { id: req.params.id } });
+		if(!post){
+			return res.status(404).send('Not exist post');
+		};
+		const newComment = await db.Comment.create({
+			PostId: post.id,
+			UserId: req.user.id,
+			content: req.body.content,
+		});
+		const comment = await db.Comment.findOne({
+			where: {
+				id: newComment.id
+			},
+			include: [{
+				model: db.User,
+				attributes: ['id', 'nickname']
+			}]
+		});
+		return res.json(comment);
+	}catch(err){
+		
+	}
+});
+
+postRouter.get('/:id/comments', async (req, res, next) => {
+	try{
+		const post = await db.Post.findOne({ where: { id: req.params.id } });
+		if(!post){
+			return res.status(404).send('Not found');
+		}
+		const comments = await db.Comment.findAll({
+			where: { 
+				PostId: req.params.id,
+			},
+			include: [{
+				model. db.User,
+				attributes: ['id', 'nickname']
+			}],
+			order: [['createAt', 'ASC'], ['updatedAt', 'ASC']]
+		});
+		res.json(comments)
+	}catch(err){
+		console.log(err);
+	}
+})
+
 module.exports = postRouter;
