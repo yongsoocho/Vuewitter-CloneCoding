@@ -1,6 +1,7 @@
 export const state = () => ({
 	mainPost: [],
 	hasMorePost:true,
+	imagePaths: [],
 });
 
 const totalPosts = 51;
@@ -32,6 +33,12 @@ export const mutations = {
 		}));
 		state.mainPost = state.mainPost.concat(fakePosts);
 		state.hasMorePost = fakePosts.length === limit;
+	},
+	concatImagePaths(state, payload) {
+		state.imagePaths = state.imagePaths.concat(payload);
+	},
+	removeImagePaths(state, payload) {
+		state.imagePaths.splice(payload, 1);
 	}
 };
 
@@ -49,5 +56,16 @@ export const actions = {
 		if(state.hasMorePost){
 			commit('loadPost');
 		}
-	}
+	},
+	uploadImages({ commit }, payload) {
+		this.$axios.post('https://vuewitterexpress.run.goorm.io:3085/post/images', payload, {
+			withCredentials: true
+		})
+		.then(() => {
+			commit('concatImagePaths', res.data);
+		})
+		.catch(() => {
+			
+		})
+	},
 };

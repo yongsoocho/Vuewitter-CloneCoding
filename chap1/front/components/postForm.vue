@@ -18,7 +18,18 @@
 	
 				</v-textarea>
 				<v-btn color="teal accent-4" type="submit" class="white--text">twit</v-btn>
-				<v-btn color="white" class="black--text">image</v-btn>
+				<input ref="imageInput" type="file" multiple hidden @change="onChangeImage"/>
+				<v-btn color="white" class="black--text" @click="onClickImageUpload" type="button">image</v-btn>
+				<div>
+					<div v-for="(p, i) in imagePaths" :key="p" :style="{ display: inline-block }">
+						<img :src=`https://vuewitterexpress.run.goorm.io:3085/${p}` alt="p"/>
+						<div>
+							<button @click="upRemoveImages(i)" type="button">
+								DELETE
+							</button>
+						</div>
+					</div>
+				</div>
 			</v-form>
 		</v-container>
 	</v-card>
@@ -67,13 +78,29 @@ export default {
 				})
 			}
 		},
-		computed:{
-			me() {
-				return this.$store.state.user.me;
-			},
-			mainPost() {
-				return this.$store.state.post.mainPost;
-			}
+		onClickImageUpload() {
+			this.$refs.imageInput.click();
+		},
+		onChangeImage(e) {
+			const imageFormData = new FormData();
+			[].forEach.call(e.target.files, (f) => {
+				imageFormData.append('image', f)
+			});
+			this.$store.dispatch('post/uploadImages', imageFormData);
+		},
+		upRemoveImages(i) {
+			this.$store.commit('post/removeImagePaths', i);
+		}
+	},
+	computed:{
+		me() {
+			return this.$store.state.user.me;
+		},
+		mainPost() {
+			return this.$store.state.post.mainPost;
+		},
+		imagePaths() {
+			return this.$store.state.post.imagePaths;
 		}
 	}
 }

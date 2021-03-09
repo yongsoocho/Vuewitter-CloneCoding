@@ -116,4 +116,8 @@
 
 54. belongsTo-hasMany / belongsToMany-belongsToMany / 따른 칸에 있는 ID = 외래키 => 외래키를 여러개 허용x 그래서 through 가생김
 
-55. 
+55. v-btn 은 type="submit" / type="button" 명시를 해주자! 지가 알아서 보낼 수가 있다..
+
+56. multer: single / array / fields / none
+
+57. 
