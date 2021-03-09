@@ -44,7 +44,18 @@ export const mutations = {
 
 export const actions = {
 	add({ commit }, payload) {
-		commit('addMainPost', payload);
+		this.$axios.post('https://vuewitterexpress.run.goorm.io:3085/post', {
+			content:payload.content,
+			imagePaths: state.imagePaths
+		}, {
+			withCredentials: true,
+		})
+		.then((res) => {
+			commit('addMainPost', res.data);
+		})
+		.catch(() => {
+			
+		});
 	},
 	remove({ commit }, payload) {
 		commit('removeMainPost', payload);
