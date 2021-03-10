@@ -60,7 +60,12 @@ export default {
 			
 		},
 		onToggleComment(){
-			this.commentOpen = !this.commentOpen;
+			if(!this.commentOpened){
+				this.$store.dispatch('post/loadComment', {
+					postId:this.post.id
+				});
+			}
+			this.commentOpened = !this.commentOpened;
 		}
 	},
 	components:{

@@ -10,6 +10,7 @@ const cookie = require('cookie-parser');
 const morgan = require('morgan');
 const userRouter = require('./routes/user');
 const postRouter = require('./routes/post');
+const postsRouter = require('./routes/posts');
 
 passportConfig();
 db.sequelize.sync({ force:false });
@@ -42,6 +43,7 @@ app.get('/', (req, res) => {
 
 app.use('/user', userRouter);
 app.use('/post', postRouter);
+app.use('/posts', postsRouter);
 
 
 app.listen(3085, () => {

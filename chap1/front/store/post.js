@@ -17,28 +17,21 @@ export const mutations = {
 	},
 	addComment(state, payload) {
 		const index = state.mainPost.findIndex( v => v.id === payload.postId );
-		state.mainPost[index].Comments.unshift(payload);		
+		state.mainPost[index].Comments.unshift(payload);
 	},
 	loadPost(state, payload) {
-		const diff = totalPosts - state.mainPost.length;
-		const fakePosts = Array(diff > limit ? limit : diff).fill().map(v => ({
-			id:Math.random().toString(),
-			User:{
-				id:1,
-				nickname:'ygr'
-			},
-			content:`Hello infinite scrolling ${Math.random()}`,
-			Comments:[],
-			Images:[]
-		}));
-		state.mainPost = state.mainPost.concat(fakePosts);
-		state.hasMorePost = fakePosts.length === limit;
+		state.mainPost = state.mainPost.concat(payload);
+		state.hasMorePost = payload.length === limit;
 	},
 	concatImagePaths(state, payload) {
 		state.imagePaths = state.imagePaths.concat(payload);
 	},
 	removeImagePaths(state, payload) {
 		state.imagePaths.splice(payload, 1);
+	},
+	loadComment(state, payload) {
+		const index = state.mainPost.findIndex( v => v.id === payload.postId );
+		state.mainPost[index].Comments = payload;
 	}
 };
 
@@ -61,11 +54,32 @@ export const actions = {
 		commit('removeMainPost', payload);
 	},
 	addComment({ commit }, payload) {
-		commit('addComment', payload);
+		this.$axios.post(`https://vuewitterexpress.run.goorm.io:3085/post/${payload.postId}/comment`, {
+			content:payload.content
+		}, {
+			withCredentials:true
+		})
+		.then((res) => {
+			commit('addComment', res.data);
+		})
+		.catch(() => {
+			
+		});
 	},
 	loadPost({ commit, state }, payload) {
 		if(state.hasMorePost){
-			commit('loadPost');
+			this.$axios.get(`https://vuewitterexpress.run.goorm.io:3085/posts?offset=${state.mainPost.length}*limit=10`,{
+				// data
+			}, {
+				withCredentials:true
+			})
+			.then((res) => {
+				commit('loadPost');
+			})
+			.catch((error) => {
+				console.log(error);
+				next(error);
+			});
 		}
 	},
 	uploadImages({ commit }, payload) {
@@ -79,4 +93,13 @@ export const actions = {
 			
 		})
 	},
+	loadComment({ commit }, payload) {
+		this.$axios.get('https://vuewitterexpress.run.goorm.io:3085/post/${payload.postId}/comment')
+		.then((res) => {
+			commit('loadComment', res.data);
+		})
+		.catch(() => {
+			
+		});
+	}
 };
