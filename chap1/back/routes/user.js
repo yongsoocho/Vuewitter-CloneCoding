@@ -6,6 +6,11 @@ const { isLoggedIn, isLoggedOut } = require('./middlewares');
 
 const userRouter = express.Router();
 
+userRouter.get('/', isLoggedIn, async (req, res, next) => {
+	const user = req.user;
+	res.json(user);
+});
+
 userRouter.post('/', isLoggedOut, async (req, res) => {
 	try{
 		const hash = await bcrypt.hash(req.body.password, 12);

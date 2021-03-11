@@ -10,7 +10,10 @@ module.exports = ()=> {
 	
 	passport.deserializeUser(async () => {
 		try{
-			const user = await db.User.findOne({ where:{ id } }); //caching after
+			const user = await db.User.findOne({ 
+				where: { id },
+				attributes: ['id', 'nickname'],
+			}); //caching after
 			return done(null, user) //req.user , req.isAuthenticated() === true
 		}catch(error){
 			console.error(error);

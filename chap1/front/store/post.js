@@ -12,7 +12,7 @@ export const mutations = {
 		state.mainPost.unshift(payload);
 	},
 	removeMainPost(state, payload){
-		const index = state.mainPost.findIndex( v => v.id === payload.id );
+		const index = state.mainPost.findIndex( v => v.id === payload.postId );
 		state.mainPost.splice(index, 1);
 	},
 	addComment(state, payload) {
@@ -36,10 +36,10 @@ export const mutations = {
 };
 
 export const actions = {
-	add({ commit }, payload) {
+	add({ commit, state }, payload) {
 		this.$axios.post('https://vuewitterexpress.run.goorm.io:3085/post', {
 			content:payload.content,
-			imagePaths: state.imagePaths
+			image: state.imagePaths
 		}, {
 			withCredentials: true,
 		})
@@ -51,7 +51,16 @@ export const actions = {
 		});
 	},
 	remove({ commit }, payload) {
-		commit('removeMainPost', payload);
+		this.$axios.delete(`https://vuewitterexpress.run.goorm.io:3085/post/${payload.postId}`, { // none data index If delete rest
+			withCredentials:true
+		})
+		.then(() => {
+			commit('removeMainPost', payload);
+		})
+		.catch((error) => {
+			console.log(error);
+			next(error);
+		})
 	},
 	addComment({ commit }, payload) {
 		this.$axios.post(`https://vuewitterexpress.run.goorm.io:3085/post/${payload.postId}/comment`, {

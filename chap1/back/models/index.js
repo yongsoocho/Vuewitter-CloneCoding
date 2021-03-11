@@ -4,7 +4,7 @@ const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
 const sequelize = new Sequelize(config.database, config.username, {
-	host:'0.0.0.0',
+	host:'database-1.c0mwrafefwa2.us-east-1.rds.amazonaws.com',
 	dialect: 'mssql'
 });
 

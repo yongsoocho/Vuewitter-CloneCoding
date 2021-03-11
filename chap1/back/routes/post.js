@@ -33,6 +33,15 @@ postRouter.post('/', isLoggedIn, async (req, res, next) => {
 			})));
 			await newPost.addHashtags(result.map(r => r[0]));
 		}
+		if(req.body.image){
+			if(Array.isArray(req.body.image)){
+				const images = await Promise.all(req.body.image.map((image) => {
+					return db.Image.create({ src: image, PostId: newPost.id });
+				}));
+			}else{
+				const image = await db.Image.create({ src: req.body.image, PostId: newPost.id });
+			}
+		}
 		const fullPost = await db.Post.findOne({
 			where: { id: newPost.db },
 			include: [{
@@ -46,7 +55,8 @@ postRouter.post('/', isLoggedIn, async (req, res, next) => {
 	}
 });
 
-postRouter.post('images', upload.array('image'), isLoggedOut, (req, res) => {
+postRouter.post('/images', upload.array('image'), isLoggedOut, (req, res) => {
+	console.log(req.files);
 	res.json(req.files.map(v => v.filename));
 })
 
@@ -87,7 +97,7 @@ postRouter.get('/:id/comments', async (req, res, next) => {
 				PostId: req.params.id,
 			},
 			include: [{
-				model. db.User,
+				model: db.User,
 				attributes: ['id', 'nickname']
 			}],
 			order: [['createAt', 'ASC'], ['updatedAt', 'ASC']]
@@ -95,6 +105,20 @@ postRouter.get('/:id/comments', async (req, res, next) => {
 		res.json(comments)
 	}catch(err){
 		console.log(err);
+	}
+});
+
+postRouter.delete('/:id', async (req, res, next) => {
+	try{
+		await db.Post.destroy({
+			where: {
+				id: req.params.id
+			}
+		});
+		res.send('Delete Complete!');
+	}catch(err){
+		console.log(err);
+		next(err);
 	}
 })
 

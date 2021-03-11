@@ -60,6 +60,9 @@ export default {
 			});
 			this.hashtag='';
 		},
+	},
+	fetch({ store }) { //before mounted, fill store
+		store.dispatch('user/loadUser');
 	}
 }
 </script>

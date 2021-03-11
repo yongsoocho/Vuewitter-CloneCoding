@@ -120,4 +120,6 @@
 
 56. multer: single / array / fields / none
 
-57. 
+57. get 이나 delete 는 2번째에 바로 withCredentials 다른것은 2번째 데이터와 3번째 옵션
+
+58. 

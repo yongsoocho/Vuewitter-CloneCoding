@@ -52,12 +52,24 @@ export const mutations = {
 };
 
 export const actions = {
+	loadUser({ commit }) {
+		this.$axios.get('https://vuewitterexpress.run.goorm.io:3085/user', {
+			withCredentials:true
+		})
+		.then((res) => {
+			commit('setMe', res.data);
+		})
+		.catch((err) => {
+			
+		})
+	},
 	signUp({ commit, state }, payload) {
 		this.$axios.post('https://vuewitterexpress.run.goorm.io:3085/user', {
 			email: payload.email,
 			nickname: payload.nickname,
 			password: payload.password
-		}).then((res.data)=>{
+		})
+		.then((res) => {
 			console.log(res.data);
 			commit('setMe', payload);
 		})
@@ -68,7 +80,7 @@ export const actions = {
 			password: payload.password
 		}, {
 			withCredentials: true
-		}).then((res.data)=>{
+		}).then((res)=>{
 			console.log(res.data);
 			commit('setMe', payload);
 		}).catch((error)=>{
