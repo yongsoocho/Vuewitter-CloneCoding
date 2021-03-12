@@ -2,7 +2,7 @@
 <div>
 	<v-container :style="{ padding:'10px 10px', marginBottom:'20px' }">
 		<v-card>
-			<v-image />
+			<post-images :images="post.Images || []" />
 			<v-card-text>
 				<div>
 					<h3><NuxtLink :to="'/user/'+post.id">{{ post.User.nickname }}</NuxtLink></h3>
@@ -42,6 +42,7 @@
 
 <script>
 	import commentForm from "./commentForm";
+	import postImages from "./postImages";
 	
 export default {
 	props:{
@@ -70,6 +71,7 @@ export default {
 	},
 	components:{
 		commentForm,
+		postImages
 	},
 	data() {
 		return {

@@ -17,7 +17,7 @@ const upload = multer({
     		done(null, basename + Date.now() + ext)
  		}
 	}),
-	limit:{ fileSize: 20*1024*1024 }
+	limit:{ fileSize: 20*1024*1024 } //B KB MB
 })
 
 postRouter.post('/', isLoggedIn, async (req, res, next) => {
@@ -47,6 +47,8 @@ postRouter.post('/', isLoggedIn, async (req, res, next) => {
 			include: [{
 				model: db.User,
 				attributes: ['id', 'nickname']
+			}, {
+				model: db.Image
 			}],
 		});
 		return res.json(fullPost);

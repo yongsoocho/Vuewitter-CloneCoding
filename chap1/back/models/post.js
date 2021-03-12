@@ -1,3 +1,5 @@
+const { sequelize, Datatypes } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
 	const Post = sequelize.define('Post', { //table:posts
 		content: {

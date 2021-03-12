@@ -1,3 +1,5 @@
+const { sequelize, Datatypes } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
 	const Comment = sequelize.define('Comment', {
 		content:{
