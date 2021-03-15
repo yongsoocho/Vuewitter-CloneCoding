@@ -32,6 +32,17 @@ export const mutations = {
 	loadComment(state, payload) {
 		const index = state.mainPost.findIndex( v => v.id === payload.postId );
 		state.mainPost[index].Comments = payload;
+	},
+	unlikePost(state, payload) {
+		const index = state.mainPost.findIndex(v => v.id === payload.postId);
+		const userIndex = state.mainPost[index].Likers.findIndex(v => v.id === payload.userId);
+		state.mainPost[index].Likers.splice(userIndex, 1);
+	},
+	likePost(state, payload) {
+		const index = state.mainPost.findIndex(v => v.id === payload.postId);
+		state.mainPost[index].Likers.push({
+			id: payload.userId
+		})
 	}
 };
 
@@ -110,5 +121,44 @@ export const actions = {
 		.catch(() => {
 			
 		});
+	},
+	retweet({ commit }, payload){
+		this.$axios.post(`/post/${payload.postId}/retweet`, {}, {
+			withCredentials: true // logged In check
+		})
+		.then((res) => {
+			commit('addMainPost', res.data)
+		})
+		.catch((err) => {
+			console.error(err);
+		})
+	},
+	likePost({ commit }, payload){
+		this.$axios.post(`/post/${payload.postId}/like`, {}, {
+			withCredentials: true // logged In check
+		})
+		.then((res) => {
+			commit('likePost', {
+				userId: res.data.userId,
+				postId: payload.postId
+			})
+		})
+		.catch((err) => {
+			console.error(err);
+		})
+	},
+	unlikePost({ commit }, payload){
+		this.$axios.delete(`/post/${payload.postId}/like`, {
+			withCredentials: true // logged In check
+		})
+		.then((res) => {
+			commit('unlikePost', {
+				userId: res.data.userId,
+				postId: payload.postId
+			});
+		})
+		.catch((err) => {
+			console.error(err);
+		})
 	}
 };

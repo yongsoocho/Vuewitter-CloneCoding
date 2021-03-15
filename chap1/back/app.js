@@ -18,7 +18,7 @@ db.sequelize.sync({ force:false });
 
 app.use(morgan('dev'));
 app.use(cors({
-	origin:'https://vuewitter.run.goorm.io:8000',
+	origin:'https://vuewitter.run.goorm.io:3080',
 	credentials:true
 }));
 app.use('/', express.static('uploads'));

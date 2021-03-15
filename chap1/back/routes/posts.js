@@ -10,6 +10,21 @@ postsRouter.get('/', async (req, res, next) => {
 			include:[{
 				model: db.User,
 				attributes: ['id', 'nickname']
+			}, {
+				model: db.Image
+			}, {
+				model: db.User,
+				as: 'Likers',
+				attributes: ['id']
+			}, {
+				model: db.Post,
+				as: 'Retweet',
+				include: [{
+					model: db.User,
+					attributes: ['id', 'nickname']
+				}, {
+					model: db.Image
+				}]
 			}],
 			order: [['createAt', 'DESC']],
 			offset: parseInt(req.query.offset, 10),
