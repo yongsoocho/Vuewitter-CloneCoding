@@ -62,7 +62,7 @@ postRouter.post('/images', upload.array('image'), isLoggedOut, (req, res) => {
 	res.json(req.files.map(v => v.filename));
 })
 
-postRouter.post('/:id/comment', isLoggedIni, async (req, res, next) => {
+postRouter.post('/:id/comment', isLoggedIn, async (req, res, next) => {
 	try{
 		const post = await db.Post.findOne({ where: { id: req.params.id } });
 		if(!post){
@@ -122,6 +122,97 @@ postRouter.delete('/:id', async (req, res, next) => {
 		console.log(err);
 		next(err);
 	}
-})
+});
+
+postRouter.post('/:id/retweet', async (req, res, next) => {
+	try{
+		const post = await db.Post.findOne({
+			where: { id:req.params.id },
+			include:[{
+				model: db.Post,
+				as: 'Retweet' //리트윗한 게시글 리트윗시 원본게시글
+			}]
+		});
+		if(!post){
+			return res.status(404).send('Not Found Post');
+		};
+		if(req.user.id === post.UserId || (post.Retweet && post.Retweet.UserId === req.User.id)){
+			return res.status(404).send(`You can't retweet your post!`);
+		};
+		const retweetTargetId = post.RetweetId || post.id;
+		const exPost = await db.Post.findOne({
+			where: {
+				UserId: req.user.id,
+				RetweetId: retweetTargetId
+			},
+		});
+		if(exPost){
+			return res.status(404).send('Already Retweeted');
+		};
+		const retweet = await db.Post.create({
+			UserId: req.user.id,
+			RetweetId: retweetTargetId,
+			content: 'retweet'
+		});
+		const retweetWithPrevPost = await db.Post.findOne({
+			where:{
+				id: retweet.id
+			},
+			include:[{
+				model: db.User,
+				attributes: ['id', 'nickname']
+			}, {
+				model: db.Post,
+				as: 'Retweet',
+				include:[{
+					model: db.User,
+					attributes: ['id', 'nickname']
+				}, {
+					model: db.Image,
+				}],
+			}]
+		});
+		res.json(retweetWithPrevPost);
+	}catch(err){
+		console.error(err);
+		next(err);
+	}
+});
+
+postRouter.post('/:id/like', isLoggedIn, async (req, res, next) => {
+	try{
+		const post = await db.Post.findOne({
+			where:{
+				id: req.params.id
+			}
+		});
+		if(!post){
+			return res.status(404).send('Not Found');
+		}
+		await post.addLiker(req.user.id); // addLiker 가 자동으로 추가
+		res.json({ userId: req.user.id });
+	}catch(err){
+		console.error(err);
+		next(err);
+	}
+});
+
+postRouter.delete('/:id/like', isLoggedIn, async (req, res, next) => {
+	try{
+		const post = await db.Post.findOne({
+			where:{
+				id: req.params.id
+			}
+		});
+		if(!post){
+			return res.status(404).send('Not Found');
+		}
+		await post.removeLiker(req.user.id); // addLiker 가 자동으로 추가
+		res.json({ userId: req.user.id });
+	}catch(err){
+		console.error(err);
+		next(err);
+	}
+});
 
 module.exports = postRouter;

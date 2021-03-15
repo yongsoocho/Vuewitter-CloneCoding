@@ -21,8 +21,10 @@ module.exports = (sequelize, Datatypes) => {
 	});
 	
 	User.associate = (db) => {
-		db.User.hasMany(db.Post);
+		db.User.hasMany(db.Post); //PostId
 		db.User.hasMany(db.Comment);
+		db.User.belongsToMany(db.User, { through:'Follow', as: 'Followwer', foreignKey:'followingId' }); //foreignKey is opposite
+		db.User.belongsToMany(db.User, { through:'Follow', as: 'Following', foreignKey:'followerId' });
 	};
 	
 	return User;

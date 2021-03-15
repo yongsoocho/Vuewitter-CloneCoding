@@ -3,36 +3,42 @@
     "name": "profile",
     "path": "/profile",
     "component": "/workspace/Vuewitter-CloneCodin/chap1/front/pages/profile.vue",
-    "chunkName": "pages/profile"
+    "chunkName": "pages/profile",
+    "_name": "_747b108a"
   },
   {
     "name": "signup",
     "path": "/signup",
     "component": "/workspace/Vuewitter-CloneCodin/chap1/front/pages/signup.vue",
-    "chunkName": "pages/signup"
+    "chunkName": "pages/signup",
+    "_name": "_1eb749c7"
   },
   {
     "name": "hashtag-id",
     "path": "/hashtag/:id",
     "component": "/workspace/Vuewitter-CloneCodin/chap1/front/pages/hashtag/_id/index.vue",
-    "chunkName": "pages/hashtag/_id/index"
+    "chunkName": "pages/hashtag/_id/index",
+    "_name": "_f745664a"
   },
   {
     "name": "post-id",
     "path": "/post/:id",
     "component": "/workspace/Vuewitter-CloneCodin/chap1/front/pages/post/_id/index.vue",
-    "chunkName": "pages/post/_id/index"
+    "chunkName": "pages/post/_id/index",
+    "_name": "_8be52f86"
   },
   {
     "name": "user-id",
     "path": "/user/:id",
     "component": "/workspace/Vuewitter-CloneCodin/chap1/front/pages/user/_id/index.vue",
-    "chunkName": "pages/user/_id/index"
+    "chunkName": "pages/user/_id/index",
+    "_name": "_6c4557b0"
   },
   {
     "name": "index",
     "path": "/",
     "component": "/workspace/Vuewitter-CloneCodin/chap1/front/pages/index.vue",
-    "chunkName": "pages/index"
+    "chunkName": "pages/index",
+    "_name": "_3d219173"
   }
 ]

@@ -1,16 +1,13 @@
 const Sequelize = require('sequelize');
-const env = process.env.NODE_ENV || 'development';
+const env = 'development'; //process.env.NODE_ENV
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
-const sequelize = new Sequelize(config.database, config.username, {
-	host:'database-1.c0mwrafefwa2.us-east-1.rds.amazonaws.com',
-	dialect: 'mssql'
-});
+const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 db.User = require('./user')(sequelize, Sequelize);
 db.Post = require('./post')(sequelize, Sequelize);
-db.Image = require('./imgae')(sequelize, Sequelize);
+db.Image = require('./image')(sequelize, Sequelize);
 db.Hashtag = require('./hashtag')(sequelize, Sequelize);
 db.Comment = require('./comment')(sequelize, Sequelize);
 

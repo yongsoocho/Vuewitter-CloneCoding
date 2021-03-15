@@ -1,5 +1,4 @@
 const passport = require("passport");
-const mongoUser = require("../models/mongoUser");
 const local = require("./local");
 const db = require('../models');
 

@@ -79,8 +79,8 @@ export default {
 		}
 	},
 	fetch({ store }){
-		store.dispatch('user/loadFollower');
-		store.dispatch('user/loadFollowing');
+		return store.dispatch('user/loadFollower');
+		return store.dispatch('user/loadFollowing');
 	}
 }
 </script>

@@ -48,7 +48,7 @@ userRouter.post('/login', isLoggedOut, (req, res, next) => {
 	})(req, res, next);
 });
 
-app.post('/logout', isLoggedIn, (req, res, next) => {
+userRouter.post('/logout', isLoggedIn, (req, res, next) => {
 	if(req.isAuthenticated()){
 		req.logout();
 		req.session.destroy();  //optional

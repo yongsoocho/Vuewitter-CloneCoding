@@ -3,7 +3,7 @@
     "username": "root",
     "password": "vuewitter",
     "database": "vuewitter",
-    "host": "34.68.71.158",
+    "host": "3.35.25.197",
     "dialect": "mysql"
   },
   "test": {

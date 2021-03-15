@@ -1,4 +1,4 @@
-const express = require('exprss');
+const express = require('express');
 
 const db = require("../models");
 
@@ -22,4 +22,4 @@ postsRouter.get('/', async (req, res, next) => {
 	}
 });
 
-module.exports = router;
+module.exports = postsRouter;
