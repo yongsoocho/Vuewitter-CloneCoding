@@ -44,7 +44,26 @@ userRouter.post('/login', isLoggedOut, (req, res, next) => {
 		if(info){
 			return res.status(401).sen(info.reason);
 		}
-		return req.login(user);
+		return req.login(user, async (err) => {
+			if(err) {
+				console.error(err);
+				return next(err);
+			}
+			const fullUser = await db.User.findOne({
+				where: { id: user.id },
+				attributes: ['id', 'email', 'nickname'],
+				include:[{
+					model: db.User,
+					as: 'Followings',
+					attributes: ['id']
+				}, {
+					model: db.User,
+					as: 'Followers',
+					attributes: ['id']
+				}]
+			})
+			return res.json(fullUser);
+		});
 	})(req, res, next);
 });
 
@@ -55,5 +74,91 @@ userRouter.post('/logout', isLoggedIn, (req, res, next) => {
 		return res.status(200).send('logout Success');
 	}
 });
+
+userRouter.post('/:id/follow', isLoggedIn, async (req, res, next) => {
+	try{
+		const me = db.User.findOne({
+			where:{ id: req.body.id }
+		});
+		await me.addFollowing(req.params.id);
+		res.send(req.params.id)
+	}catch(err){
+		console.error(err);
+		next(err);
+	}
+});
+
+userRouter.delete('/:id/follow', isLoggedIn, async (req, res, next) => {
+	try{
+		const me = db.User.findOne({
+			where:{ id: req.body.id }
+		});
+		await me.removeFollowing(req.params.id);
+		res.send(req.params.id)
+	}catch(err){
+		console.error(err);
+		next(err);
+	}
+});
+
+userRouter.patch('/:id/follow', isLoggedIn, async (req, res, next) => {
+	try{
+		await db.User.update({
+			nickname: req.body.nickname
+		}, {
+			where: { id: req.user.id }
+		});
+	}catch(err){
+		console.error(err);
+		next(err);
+	}
+});
+
+userRouter.get('/:id/following', isLoggedIn, async (req, res, next) => {
+	try{
+		const user = await db.User.findOne({
+			where: { id: req.user.id }
+		})
+		const followings = await user.getFollowings({
+			attributes:['id', 'nickname'],
+			limit: parseInt(req.query.limit || 3, 10),
+			offset: parseInt(req.query.offset || 0, 10),
+		});
+		res.json(followings)
+	}catch(err){
+		console.error(err);
+		next(err);
+	}
+});
+
+userRouter.get('/:id/follower', isLoggedIn, async (req, res, next) => {
+	try{
+		const user = await db.User.findOne({
+			where: { id: req.user.id }
+		})
+		const followers = await user.getFollowers({
+			attributes:['id', 'nickname'],
+			limit: parseInt(req.query.limit || 3, 10),
+			offset: parseInt(req.query.offset || 0, 10),
+		});
+		res.json(followers)
+	}catch(err){
+		console.error(err);
+		next(err);
+	}
+});
+
+userRouter.delete('/:id/follower', async (req, res, next) => {
+	try{
+		const me = await db.User.findOne({
+			where: { id: req.user.id }
+		});
+		await me.removeFollower(req.params.id);
+		res.send(req.params.id)
+	}catch(err){
+		console.error(err);
+		next(err);
+	}
+})
 
 module.exports = userRouter

@@ -19,5 +19,8 @@ export default {
 		browserBaseURL:'https://vuewitterexpress.run.goorm.io:3085/post', //클라에서 보낼때
 		baseURL:'https://vuewitterexpress.run.goorm.io:3085/post', //서버에서 보낼때
 		https: false
+	},
+	server: {
+		port: 3080
 	}
 }   

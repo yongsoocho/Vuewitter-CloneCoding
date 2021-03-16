@@ -19,14 +19,14 @@
 			<v-container>
 				<v-subheader>Following</v-subheader>
 				<following-list />
-				<v-btn @click="loadMoreFollowing" v-if="hasMoreFollowing" dark color="blue" :style="{ width:'100%' }">More</v-btn>
+				<v-btn v-if="hasMoreFollowing" dark color="blue" :style="{ width:'100%' }" @click="loadMoreFollowing">More</v-btn>
 			</v-container>
 		</v-card>
 		<v-card :style="{ marginBottom:'20px' }">
 			<v-container>
 				<v-subheader>Follower</v-subheader>
 				<follower-list />
-				<v-btn @click="loadMoreFollower" v-if="hasMoreFollower" dark color="blue" :style="{ width:'100%' }">More</v-btn>
+				<v-btn v-if="hasMoreFollower" dark color="blue" :style="{ width:'100%' }" @click="loadMoreFollower">More</v-btn>
 			</v-container>
 		</v-card>
 	</v-container>
@@ -67,7 +67,7 @@ export default {
 		},
 		loadMoreFollower(){
 			this.$store.dispatch('user/loadFollower');
-		}
+		},
 	},
 	middleware: 'authenticated',
 	computed:{
@@ -79,8 +79,8 @@ export default {
 		}
 	},
 	fetch({ store }){
-		return store.dispatch('user/loadFollower');
-		return store.dispatch('user/loadFollowing');
+		store.dispatch('user/loadFollower', { offset: 0 });
+		return store.dispatch('user/loadFollowing', { offset: 0 });
 	}
 }
 </script>

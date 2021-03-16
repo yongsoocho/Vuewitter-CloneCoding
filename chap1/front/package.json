@@ -22,9 +22,4 @@
     "eslint": "^7.21.0",
     "eslint-plugin-vue": "^7.6.0"
   },
-	"config": {
-		"nuxt": {
-			"port": "3080"
-		}
-	}
 }

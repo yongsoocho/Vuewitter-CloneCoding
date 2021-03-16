@@ -2,15 +2,15 @@
 <div>
 	<v-container :style="{ padding:'10px 10px', marginBottom:'20px' }">
 		<v-card>
-			<post-images :images="post.Images || []" />
-			<v-card-text>
-				<div>
-					<h3><NuxtLink :to="'/user/'+post.id">{{ post.User.nickname }}</NuxtLink></h3>
-					<div>{{ post.content }}</div>
-				</div>
-			</v-card-text>
+			<div v-if="post.RetweetId && post.Retweet">
+				<v-subheader>{{post.User.nickname}}</v-subheader>
+				<v-card style="margin: 0px 20px">
+					<post-content :post="post.Retweet" />
+				</v-card>
+			</div>
+			<post-content v-else :post="post" />
 			<v-card-action>
-				<v-btn text color="orange"><v-icon>mdi-twitter-retweet</v-icon></v-btn>
+				<v-btn text color="orange" @click="onRetweet"><v-icon>mdi-twitter-retweet</v-icon></v-btn>
 				<v-btn text color="orange" @click="onClickHeart"><v-icon>{{heartIcon}}</v-icon></v-btn>
 				<v-btn text color="orange" @click="onToggleComment"><v-icon>mdi-comment-outline</v-icon></v-btn>
 				<v-menu offset-y>
@@ -43,6 +43,7 @@
 <script>
 	import commentForm from "./commentForm";
 	import postImages from "./postImages";
+	import postContent from "./postContent";
 	
 export default {
 	props:{
@@ -92,7 +93,8 @@ export default {
 	},
 	components:{
 		commentForm,
-		postImages
+		postImages,
+		postContent
 	},
 	data() {
 		return {

@@ -28,7 +28,7 @@ export default {
 	},
 	methods:{
 		onFollowerRemove(id){
-			this.$store.dispatch('user/onFollowerRemove', {id})
+			this.$store.dispatch('user/unFollow', { userId })
 		}
 	}
 }

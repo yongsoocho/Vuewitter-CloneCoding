@@ -12,6 +12,15 @@ module.exports = ()=> {
 			const user = await db.User.findOne({ 
 				where: { id },
 				attributes: ['id', 'nickname'],
+				include:[{
+					model: db.User,
+					as: 'Followings',
+					attributes: ['id']
+				}, {
+					model: db.User,
+					as: 'Followers',
+					attributes: ['id']
+				}]
 			}); //caching after
 			return done(null, user) //req.user , req.isAuthenticated() === true
 		}catch(error){

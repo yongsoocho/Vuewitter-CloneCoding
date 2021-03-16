@@ -127,3 +127,9 @@
 59. asyncData() { return{ } } => data(){ } 와 합쳐진다
 
 60. 리트윗처럼 자신과 자신이 관계를 갖을 수 있다.
+
+61. err.response.data 에 에러메세지 담김
+
+62. patch 는 부분수정 put 은 전체갈기
+
+63. 
