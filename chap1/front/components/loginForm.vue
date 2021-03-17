@@ -29,6 +29,11 @@
 		<v-container>
 			<h3>Welcome {{ me.nickname }}</h3>
 			<v-btn @click="onLogOut">Logout</v-btn>
+			<v-row>
+				<v-col cols="4">{{me.Followings.length}} Following</v-col>
+				<v-col cols="4">{{me.Followers.length}} Follower</v-col>
+				<v-col cols="4">{{me.Posts.length}} Posting</v-col>
+			</v-row>
 		</v-container>
 	</v-card>
 </v-container>

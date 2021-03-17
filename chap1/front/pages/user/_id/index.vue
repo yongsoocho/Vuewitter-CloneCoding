@@ -1,6 +1,15 @@
 <template>
   <v-container>
-    <post-form v-if="me" />
+	<v-card :style="{ marginBottom: '20px' }">
+		<v-container>
+			{{other.nickname}}
+			<v-row>
+				<v-col cols="4">{{other.Followings.length}} Followings</v-col>
+				<v-col cols="4">{{other.Followers.length}} Followers</v-col>
+				<v-col cols="4">{{other.Posts.length}} Postings</v-col>
+			</v-row>
+		</v-container>
+	</v-card>
     <div>
       <post-card v-for="p in mainPost" :key="p.id" :post="p" />
     </div>
@@ -8,8 +17,8 @@
 </template>
 
 <script>
-	import postCard from "~/components/postCard";
-	import postForm from "~/components/postForm";
+	import postCard from "../components/postCard";
+	import postForm from "../components/postForm";
 	
 export default {
 	data(){
@@ -22,8 +31,8 @@ export default {
 		postForm
 	},
 	computed:{
-		me(){
-			return this.$store.state.user.me;
+		other(){
+			return this.$store.state.user.other;
 		},
 		mainPost(){
 			return this.$store.state.post.mainPost;
@@ -32,8 +41,13 @@ export default {
 			return this.$store.state.post.hasMorePost;
 		}
 	},
-	fetch({ store }){
-		store.dispatch('post/loadPost');
+	fetch({ store }, params){ //cannot this in fetch, others can be this.$route.params
+		store.dispatch('user/loadOther', {
+			userId: params.id
+		});
+		return store.dispatch('post/loadUserPosts', {
+			userId: params.id
+		});
 	},
 	methods:{
 		onScroll() {

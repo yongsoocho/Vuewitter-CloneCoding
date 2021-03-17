@@ -1,3 +1,6 @@
+import Vue from "vue";
+import throttle from "lodash.throttle";
+
 export const state = () => ({
 	mainPost: [],
 	hasMorePost:true,
@@ -86,22 +89,28 @@ export const actions = {
 			
 		});
 	},
-	loadPost({ commit, state }, payload) {
+	loadPost: throttle(async function({ commit, state }, payload) {
 		if(state.hasMorePost){
-			this.$axios.get(`https://vuewitterexpress.run.goorm.io:3085/posts?offset=${state.mainPost.length}*limit=10`,{
-				// data
-			}, {
-				withCredentials:true
-			})
-			.then((res) => {
-				commit('loadPost');
-			})
-			.catch((error) => {
-				console.log(error);
-				next(error);
-			});
+			try{
+				const lastPost = state[state.mainPost.length - 1]
+				const res = await this.$axios.get(`https://vuewitterexpress.run.goorm.io:3085/posts?lastId=${lastPost && lastPost.id}*limit=10`)
+				commit('loadPostP', res.data);
+			}catch(err){
+				console.error(err);
+			}
 		}
-	},
+	}, 3000),
+	loaduserPost: throttle(async function({ commit, state }, payload) {
+		if(state.hasMorePost){
+			try{
+				const lastPost = state[state.mainPost.length - 1]
+				const res = await this.$axios.get(`/user/${payload.userId}/posts?lastId=${lastPost && lastPost.id}*limit=10`)
+				commit('loadPostP', res.data);
+			}catch(err){
+				console.error(err);
+			}
+		}
+	}, 3000),
 	uploadImages({ commit }, payload) {
 		this.$axios.post('https://vuewitterexpress.run.goorm.io:3085/post/images', payload, {
 			withCredentials: true

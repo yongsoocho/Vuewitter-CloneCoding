@@ -6,6 +6,14 @@ const postsRouter = express.Router();
 
 postsRouter.get('/', async (req, res, next) => {
 	try{
+		let where = {};
+		if(parseInt(req.query.lastId, 10)) {
+			where = {
+				id: {
+					[db.Sequelize.Op.lt]: parseInt(req.query.lastId, 10), //less than
+				}
+			}
+		}
 		const posts = await db.Post.findAll({
 			include:[{
 				model: db.User,
@@ -27,7 +35,6 @@ postsRouter.get('/', async (req, res, next) => {
 				}]
 			}],
 			order: [['createAt', 'DESC']],
-			offset: parseInt(req.query.offset, 10),
 			limit: parseInt(req.query.limit, 10)
 		});
 		res.json(posts);

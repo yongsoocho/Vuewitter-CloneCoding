@@ -3,7 +3,8 @@ export const state = () => ({
 	followerLists: [],
 	followingLists: [],
 	hasMoreFollower: true,
-	hasMoreFollowing: true
+	hasMoreFollowing: true,
+	other: null
 });
 
 const totalFollowers = 8;
@@ -18,11 +19,15 @@ export const mutations = {
 		state.me.nickname = payload.nickname;
 	},
 	onFollowingRemove(state, payload) {
-		const index = state.followingLists.findIndex(v => v.id === payload.id);
+		let index = state.me.Followings.findIndex(v => v.id === payload.userId);
+		state.me.Followings.splice(index, 1);
+		index = state.followingLists.findIndex(v => v.id === payload.userId);
 		state.followingLists.splice(index, 1);
 	},
 	onFollowerRemove(state, payload) {
-		const index = state.followerLists.findIndex(v => v.id === payload.id);
+		let index = state.me.Followers.findIndex(v => v.id === payload.userId);
+		state.me.Followers.splice(index, 1);
+		index = state.followerLists.findIndex(v => v.id === payload.userId);
 		state.followerLists.splice(index, 1);
 	},
 	onFollowerAdd(state, payload) {
@@ -55,6 +60,9 @@ export const mutations = {
 		state.me.Followings.splice(index, 1);
 		index = state.followingLists.findIndex(v => v.id === payload.userId);
 		state.followingLists.splice(index, 1);
+	},
+	setOther(state, payload) {
+		state.other = payload;
 	}
 };
 
@@ -201,5 +209,15 @@ export const actions = {
 			console.error(err);
 			next(err);
 		})
+	},
+	async loadOther({ commit }, payload){
+		try{
+			const res = await this.$axios.get(`/user/${payload.userId}`, {
+				withCredentials: true
+			});
+			commit('setOther', res.data)
+		}catch(err){
+			console.error(err);
+		}
 	}
 };
