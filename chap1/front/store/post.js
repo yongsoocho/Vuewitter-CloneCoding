@@ -23,6 +23,11 @@ export const mutations = {
 		state.mainPost[index].Comments.unshift(payload);
 	},
 	loadPost(state, payload) {
+		if(payload.reset){
+			state.mainPost = payload.data;
+		}else{
+			state.mainPost.concat(payload.data);
+		}
 		state.mainPost = state.mainPost.concat(payload);
 		state.hasMorePost = payload.length === limit;
 	},
@@ -100,12 +105,20 @@ export const actions = {
 			}
 		}
 	}, 3000),
-	loaduserPost: throttle(async function({ commit, state }, payload) {
+	loadUserPost: throttle(async function({ commit, state }, payload) {
+		if(payload && payload.reset){
+			const res = await this.$axios.get(`/user/${payload.userId}/posts?limit=10`)
+			commit('loadPost', {
+				data: res.data,
+				reset: true
+			});
+			return;
+		}
 		if(state.hasMorePost){
 			try{
 				const lastPost = state[state.mainPost.length - 1]
 				const res = await this.$axios.get(`/user/${payload.userId}/posts?lastId=${lastPost && lastPost.id}*limit=10`)
-				commit('loadPostP', res.data);
+				commit('loadPost', res.data);
 			}catch(err){
 				console.error(err);
 			}

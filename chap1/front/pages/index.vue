@@ -33,7 +33,7 @@ export default {
 		}
 	},
 	fetch({ store }){
-		store.dispatch('post/loadPost');
+		store.dispatch('post/loadPost', { reset:true });
 	},
 	methods:{
 		onScroll() {

@@ -2,7 +2,7 @@
 <div>
 	<post-images :images="post.Images || []" />
 			<v-card-title>
-				<h3><NuxtLink :to="'/user/'+post.id">{{ post.User.nickname }}</NuxtLink></h3>
+				<h3><NuxtLink :to="'/user/'+post.User.id">{{ post.User.nickname }}</NuxtLink></h3>
 				<v-btn v-if="canFollow" @click="onFollow"></v-btn>
 				<v-btn v-if="canUnFollow" @click="onUnFollow"></v-btn>
 			</v-card-title>

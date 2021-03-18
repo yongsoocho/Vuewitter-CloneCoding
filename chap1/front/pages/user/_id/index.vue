@@ -46,7 +46,8 @@ export default {
 			userId: params.id
 		});
 		return store.dispatch('post/loadUserPosts', {
-			userId: params.id
+			userId: params.id,
+			reset: true
 		});
 	},
 	methods:{
